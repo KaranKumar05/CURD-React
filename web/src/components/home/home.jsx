@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import * as Icon from 'react-bootstrap-icons';
+import "./home.css";
 
 const baseUrl = "http://localhost:4000";
 const Home = () => {
@@ -12,7 +14,7 @@ const Home = () => {
   const [alert, setAlert] = useState(null); //Print Server Respond
   const [allPosts, setAllPosts] = useState([]); //Print All Posts. As States Changes component will reRender
   const [toggleRefresh, setToggleRefresh] = useState(false); //Toggle Refresh Button
-  const [editAlert, setEditAlert] = useState(false); //Toggle Refresh Button
+  // const [editAlert, setEditAlert] = useState(false); //Toggle Refresh Button
 
   // Function to get all Post
   const getAllPost = async () => {
@@ -101,25 +103,30 @@ const Home = () => {
   };
   return (
     <div>
-      <form onSubmit={postHandler}>
-        <label htmlFor="postTitleInput">Post Title:</label>
-        <input type="text" id="postTitleInput" ref={postTitleInput} required />
-        <br />
-        <label htmlFor="postTextInput">Post Text:</label>
+      <form onSubmit={postHandler} className="postForm form">
+        <input
+          type="text"
+          id="postTitleInput"
+          placeholder="Post Title"
+          ref={postTitleInput}
+          required
+        />
         <textarea
           id="postTextInput"
           ref={postTextInput}
           cols="20"
           rows="5"
+          placeholder="What's on your mind"
           required
         ></textarea>
-        <br />
-        <button type="submit">Post</button>
-        <span>
-          {alert && alert} {/* Server Respond */}
-          {isLoading && "Loading.."}
-          {/* Loading.... Text */}
-        </span>
+        <div>
+          <button type="submit">Publish Post</button>
+          <span>
+            {alert && alert} {/* Server Respond */}
+            {isLoading && "Loading.."}
+            {/* Loading.... Text */}
+          </span>
+        </div>
       </form>
       <br />
       <div>
@@ -160,25 +167,29 @@ const Home = () => {
                 </span>
               </form>
             ) : (
-              <div>
-                <h2>{post.title}</h2>
-                <p>{post.text}</p>
-                <button
-                  onClick={(e) => {
-                    allPosts[index].isEdit = true;
-                    setAllPosts([...allPosts]);
-                  }}
-                >
-                  Edit
-                </button>
+              <div className="postCardContainer">
+                <div className="postCard">
+                  <h2>{post.title}</h2>
+                  <p>{post.text}</p>
+                  <div>
+                    <button
+                      onClick={(e) => {
+                        allPosts[index].isEdit = true;
+                        setAllPosts([...allPosts]);
+                      }}
+                    >
+                      Edit
+                    </button>
 
-                <button
-                  onClick={(e) => {
-                    deletePostFunction(post._id);
-                  }}
-                >
-                  Delete
-                </button>
+                    <button
+                      onClick={(e) => {
+                        deletePostFunction(post._id);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
               </div>
             )}
           </div>

@@ -1,9 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
 import Home from './components/home/home.jsx';
+import Navbar from './components/navbar/navbar.jsx';
 
 
 
-const App =() => <Home />;
+
+
+const App = () => {
+    return (
+        <div>
+            <Navbar />
+            <Home />
+        </div>
+    )
+};
 
 export default App;
